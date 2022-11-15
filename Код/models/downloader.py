@@ -57,6 +57,6 @@ if __name__ == "__main__":
             "https://huggingface.co/facebook/wmt19-en-ru/resolve/main/pytorch_model.bin",
             "https://huggingface.co/facebook/wmt19-en-ru/raw/main/tokenizer_config.json",
             "https://huggingface.co/facebook/wmt19-en-ru/raw/main/vocab-src.json",
-            "https://huggingface.co/facebook/wmt19-en-ru/raw/main/vocab-src.json",
+            "https://huggingface.co/facebook/wmt19-en-ru/raw/main/vocab-tgt.json",
         )
     )
