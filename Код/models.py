@@ -1,3 +1,5 @@
+import config
+
 from abc import ABC, abstractmethod
 from transformers import AutoModelForQuestionAnswering, AutoTokenizer, pipeline
 
@@ -12,10 +14,6 @@ class Model(ABC):
         raise NotImplementedError
 
 
-class Question:
-    question = "What industry does this company work in?"
-
-
 class QuestionAnsweringModel(Model):
     @abstractmethod
     def __init__(self, path_to_model: str):
@@ -26,7 +24,7 @@ class QuestionAnsweringModel(Model):
     def predict(self, context: str) -> str:
         predictor = pipeline("question-answering", model=self.model, tokenizer=self.tokenizer)
         data = {
-            "question": Question.question,
+            "question": config.question,
             "context": context,
         }
 
@@ -37,7 +35,7 @@ class QuestionAnsweringModel(Model):
 
 class MiniLM(QuestionAnsweringModel):
     def __init__(self):
-        path_to_model = "C://Storage//Net//minilm-uncased-squad2"
+        path_to_model = config.mini_lm_path
         super(MiniLM, self).__init__(path_to_model)
 
     def predict(self, context: str):
