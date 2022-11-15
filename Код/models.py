@@ -1,7 +1,7 @@
 import config
+import transformers
 
 from abc import ABC, abstractmethod
-from transformers import AutoModelForQuestionAnswering, AutoTokenizer, pipeline
 
 
 class Model(ABC):
@@ -14,15 +14,37 @@ class Model(ABC):
         raise NotImplementedError
 
 
-class QuestionAnsweringModel(Model):
-    @abstractmethod
-    def __init__(self, path_to_model: str):
-        self.model = AutoModelForQuestionAnswering.from_pretrained(path_to_model)
-        self.tokenizer = AutoTokenizer.from_pretrained(path_to_model)
+class WMT19RuEn(Model):
+    def __init__(self):
+        self.__model = transformers.AutoModelForSeq2SeqLM.from_pretrained(config.wmt19_ru_en)
+        self.__tokenizer = transformers.AutoTokenizer.from_pretrained(config.wmt19_ru_en)
 
-    @abstractmethod
-    def predict(self, context: str) -> str:
-        predictor = pipeline("question-answering", model=self.model, tokenizer=self.tokenizer)
+    def predict(self, context: str):
+        translator = transformers.pipeline("translation", model=self.__model, tokenizer=self.__tokenizer)
+        translate = translator(context)
+
+        return translate[0].get("translation_text")
+
+
+class OpusMTEnRu(Model):
+    def __init__(self):
+        self.__model = transformers.AutoModelForSeq2SeqLM.from_pretrained(config.opus_mt_en_ru)
+        self.__tokenizer = transformers.AutoTokenizer.from_pretrained(config.opus_mt_en_ru)
+
+    def predict(self, context: str):
+        translator = transformers.pipeline("translation", model=self.__model, tokenizer=self.__tokenizer)
+        translate = translator(context)
+
+        return translate[0].get("translation_text")
+
+
+class MiniLM(Model):
+    def __init__(self):
+        self.model = transformers.AutoModelForQuestionAnswering.from_pretrained(config.mini_lm_path)
+        self.tokenizer = transformers.AutoTokenizer.from_pretrained(config.mini_lm_path)
+
+    def predict(self, context: str):
+        predictor = transformers.pipeline("question-answering", model=self.model, tokenizer=self.tokenizer)
         data = {
             "question": config.question,
             "context": context,
@@ -31,12 +53,3 @@ class QuestionAnsweringModel(Model):
         prediction = predictor(data)
 
         return prediction.get("answer")
-
-
-class MiniLM(QuestionAnsweringModel):
-    def __init__(self):
-        path_to_model = config.mini_lm_path
-        super(MiniLM, self).__init__(path_to_model)
-
-    def predict(self, context: str):
-        return super(MiniLM, self).predict(context)
