@@ -50,13 +50,15 @@ if __name__ == "__main__":
     )
 
     download_model(
-        "wmt19-en-ru",
+        "opus-mt-en-ru",
         (
-            "https://huggingface.co/facebook/wmt19-en-ru/raw/main/config.json",
-            "https://huggingface.co/facebook/wmt19-en-ru/raw/main/merges.txt",
-            "https://huggingface.co/facebook/wmt19-en-ru/resolve/main/pytorch_model.bin",
-            "https://huggingface.co/facebook/wmt19-en-ru/raw/main/tokenizer_config.json",
-            "https://huggingface.co/facebook/wmt19-en-ru/raw/main/vocab-src.json",
-            "https://huggingface.co/facebook/wmt19-en-ru/raw/main/vocab-tgt.json",
+            "https://huggingface.co/Helsinki-NLP/opus-mt-en-ru/raw/main/config.json",
+            "https://huggingface.co/Helsinki-NLP/opus-mt-en-ru/resolve/main/pytorch_model.bin",
+            "https://huggingface.co/Helsinki-NLP/opus-mt-en-ru/resolve/main/rust_model.ot",
+            "https://huggingface.co/Helsinki-NLP/opus-mt-en-ru/resolve/main/source.spm",
+            "https://huggingface.co/Helsinki-NLP/opus-mt-en-ru/resolve/main/target.spm",
+            "https://huggingface.co/Helsinki-NLP/opus-mt-en-ru/resolve/main/tf_model.h5",
+            "https://huggingface.co/Helsinki-NLP/opus-mt-en-ru/raw/main/tokenizer_config.json",
+            "https://huggingface.co/Helsinki-NLP/opus-mt-en-ru/raw/main/vocab.json",
         )
     )
